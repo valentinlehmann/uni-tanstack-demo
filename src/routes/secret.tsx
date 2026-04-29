@@ -1,15 +1,14 @@
 import {createFileRoute, redirect} from '@tanstack/react-router'
 import {Button} from "#/components/ui/button.tsx";
-import {useAppSession} from "#/utils/session.ts";
 import {useServerFn} from "@tanstack/react-start";
-import {logoutFn} from "#/functions/password.ts";
+import {getSessionUserId, logoutFn} from "#/functions/password.ts";
 
 export const Route = createFileRoute('/secret')({
     component: RouteComponent,
     beforeLoad: async ({location}) => {
-        const session = await useAppSession();
+        const userId = await getSessionUserId();
 
-        if (!session.data.userId) {
+        if (!userId) {
             throw redirect({
                 to: '/',
                 search: {redirect: location.href},

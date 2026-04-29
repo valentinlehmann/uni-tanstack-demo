@@ -20,3 +20,8 @@ export const logoutFn = createServerFn({ method: 'POST' }).handler(async () => {
     await session.clear()
     throw redirect({ to: '/' })
 })
+
+export const getSessionUserId = createServerFn({ method: 'GET' }).handler(async () => {
+    const session = await useAppSession();
+    return session.data.userId ?? null;
+});
